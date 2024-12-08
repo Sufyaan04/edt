@@ -1,4 +1,3 @@
-alert("Welcome to Skill Exchange.com");
 alert("Welcome to Skill Swap.com");
 const questions = [
     {
