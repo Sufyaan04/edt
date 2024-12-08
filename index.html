@@ -125,6 +125,20 @@
     </form>
     <br>
 </div>
+<div class="quiz-container">
+    <h1>Skill Swap Knowledge Quiz</h1>
+    <div id="quiz">
+        <div class="question-container">
+            <p id="question">Loading question...</p>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="result" class="result-container">
+        <p>Your score: <span id="score">0</span>/5</p>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+</div> 
 </body>
 <footer>
     <ul class="footer" >
