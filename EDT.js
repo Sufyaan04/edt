@@ -128,3 +128,67 @@ function restartQuiz() {
 
 
 loadQuestion();
+// Continuation of your JS code
+
+function loadQuestion() {
+    const question = questions[currentQuestionIndex];
+    const questionText = document.getElementById("question");
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = ""; // Clear previous options
+
+    questionText.textContent = question.question;
+
+    question.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.classList.add("option-btn");
+        button.textContent = option;
+        button.onclick = () => checkAnswer(index);
+        optionsDiv.appendChild(button);
+    });
+}
+
+function checkAnswer(selectedIndex) {
+    const correctIndex = questions[currentQuestionIndex].correct;
+
+    if (selectedIndex === correctIndex) {
+        score++;
+    }
+
+    // Disable options after answering
+    const options = document.querySelectorAll(".option-btn");
+    options.forEach(button => button.disabled = true);
+
+    // Enable next button after answering
+    document.getElementById("next-btn").disabled = false;
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+        document.getElementById("next-btn").disabled = true;
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById("quiz").style.display = "none";
+    const resultContainer = document.getElementById("result");
+    resultContainer.style.display = "block";
+    document.getElementById("score").textContent = score;
+}
+
+function restartQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    loadQuestion();
+    document.getElementById("quiz").style.display = "block";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("next-btn").disabled = true;
+}
+
+// Initialize quiz
+loadQuestion();
+document.getElementById("next-btn").disabled = true;
