@@ -3,157 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Swap</title>
+    <meta name="description" content="Skill Swap - A platform for students to exchange skills and foster collaboration">
+    <title>Skill Swap - Exchange Skills with Fellow Students</title>
     <link rel="stylesheet" href="EDT.css">
-    <script src="EDT.js"></script>
+    <script src="EDT.js" defer></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <head>
+    <header>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a  href="#">Skills</a></li>
-                <li><a  href="#">Contact Us</a></li>
-                <li class="navl"><a href="#">Login</a></li>
-                <li><a href="#">Sign-Up</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li class="navl"><a href="#login">Login</a></li>
+                <li><a href="#signup">Sign-Up</a></li>
             </ul>
-            
         </nav>
-    </head>
-    <br>
-    <br>
-    <h1>Skill Swap</h1><br><br>
-    <div class="h1"><p><i>Allows students to exchange skills directly with each other,<br>
-         fostering collaboration and mutual growth. <br> For example,
-          a graphic designer could exchange services with a programmer to create a portfolio website.</i>
-    </p></div><br><br>
-<div class="img1">
+    </header>
 
-    <div class="abtgd"><h2><b>Graphic Designing</b></h2><br>
-    <img src="Graphic Designing.jpeg" height="200px" alt="Graphic Designing">
-   <p><br>Graphic design is a craft where professionals create visual content to communicate messages.
-    <br></p></div>
+    <main>
+        <section id="home">
+            <h1>Skill Swap</h1>
+            <div class="h1">
+                <p><i>Allows students to exchange skills directly with each other,
+                    fostering collaboration and mutual growth. <br> For example,
+                    a graphic designer could exchange services with a programmer to create a portfolio website.</i>
+                </p>
+            </div>
+        </section>
 
-      <div class="abtve"><h2><b>Video Editing</b></h2><br>
-<img src="Video Editing.jpeg" height="200px" alt="Video Editing">
-<p><br>Video editing is the process of combining and manipulating video files to create a finished
-    video project.</p></div>
+        <section id="skills">
+            <div class="img1">
+                <div class="abtgd">
+                    <h2><b>Graphic Designing</b></h2>
+                    <img src="Graphic Designing.jpeg" alt="Graphic Designing">
+                    <p>Graphic design is a craft where professionals create visual content to communicate messages.</p>
+                </div>
 
-    <div class="abtsmm"><h2><b>Social Media Management</b></h2><br>
-<img src="smm.png" height="200px" alt="Socail Media Management">
-<p><br>The process of creating, scheduling, and analyzing <br>
-    content on social media platforms to achieve marketing and communications goals.</p></div>
-</div><br><br>
+                <div class="abtve">
+                    <h2><b>Video Editing</b></h2>
+                    <img src="Video Editing.jpeg" alt="Video Editing">
+                    <p>Video editing is the process of combining and manipulating video files to create a finished
+                        video project.</p>
+                </div>
 
+                <div class="abtsmm">
+                    <h2><b>Social Media Management</b></h2>
+                    <img src="smm.png" alt="Social Media Management">
+                    <p>The process of creating, scheduling, and analyzing content on social media platforms to achieve marketing and communications goals.</p>
+                </div>
+            </div>
 
-<div class="img2">
-    <div class="abtdm"><h2><b>Digital Marketing</b></h2><br>
-    <img src="dm.jpeg" height="200px" alt="Digital Marketing">
-    <p><br>Digital marketing is the use of digital channels and technologies to create,<br>
-         distribute, and promote content</p></div>
+            <div class="img2">
+                <div class="abtdm">
+                    <h2><b>Digital Marketing</b></h2>
+                    <img src="dm.jpeg" alt="Digital Marketing">
+                    <p>Digital marketing is the use of digital channels and technologies to create, distribute, and promote content</p>
+                </div>
 
-<div class="abtwd"><h2><b>Web Development</b></h2><br>
-<img src="WB.jpeg" height="200px" alt="Web Deveopment">
-<p><br>The process of designing, building, testing, and deploying a web application from start to finish. <br>
-     It involves working with both the front-end and back-end of a website or application.</p></div>
+                <div class="abtwd">
+                    <h2><b>Web Development</b></h2>
+                    <img src="WB.jpeg" alt="Web Development">
+                    <p>The process of designing, building, testing, and deploying a web application from start to finish. It involves working with both the front-end and back-end of a website or application.</p>
+                </div>
 
-<div class="abtad"><h2><b>App Development</b></h2><br>
-    <img src="app dev.png" height="200px" alt="App Development">
-<p><br>The process of creating, testing, and releasing software applications to meet business <br>
-     needs and improve customer experiences.</p></div></div>
+                <div class="abtad">
+                    <h2><b>App Development</b></h2>
+                    <img src="app dev.png" alt="App Development">
+                    <p>The process of creating, testing, and releasing software applications to meet business needs and improve customer experiences.</p>
+                </div>
+            </div>
+        </section>
 
+        <section id="signup" class="form-section">
+            <div class="form">
+                <form id="skillswap-form">
+                    <h1>Enter your details</h1>
+                    
+                    <div>
+                        <label for="fname">First name:</label>
+                        <input type="text" id="fname" name="fname" spellcheck="true" placeholder="Enter Your First Name" required>
+                    </div>
+                    
+                    <div>
+                        <label for="lname">Last name:</label>
+                        <input type="text" name="lname" id="lname" placeholder="Enter Your Last Name" required>
+                    </div>
+                    
+                    <div>
+                        <label for="mail">Email:</label>
+                        <input type="email" name="mail" id="mail" placeholder="youremail@example.com" required>
+                    </div>
+                    
+                    <div>
+                        <label for="num">Phone:</label>
+                        <input type="tel" name="num" id="num" placeholder="+91" required>
+                    </div>
+                    
+                    <div>
+                        <label for="skill"><b>Choose Skill:</b></label>
+                        <select id="skill" name="skill" required>
+                            <option value="">Select a skill</option>
+                            <option value="graphic-design">Graphic Design</option>
+                            <option value="video-editing">Video Editing</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="app-development">App Development</option>
+                            <option value="social-media-management">Social Media Management</option>
+                            <option value="digital-marketing">Digital Marketing</option>
+                            <option value="content-writing">Content Writing</option>
+                        </select>
+                    </div>
 
-    <div class="form">
-        <br>
-    <form action="img.html">
+                    <div>
+                        <label for="skillLevel"><b>Your Skill Level:</b></label>
+                        <select id="skillLevel" name="skillLevel" required>
+                            <option value="">Select your level</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="expert">Expert</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="work-sample"><b>Upload your Best Work</b></label>
+                        <input type="file" id="work-sample" name="work-sample" accept="image/*,.pdf,.doc,.docx" required>
+                    </div>
 
-        <h1><p><b>Enter your details </b><br></p></h1>
-        <br>
-        <div>
-            <label for="fname">First name: <br></label>
-            <input type="text" id="fname" name="fname" spellcheck="true" placeholder="Enter Your First Name" required>
+                    <div>
+                        <label for="skill-needed"><b>Skill you're looking for:</b></label>
+                        <select id="skill-needed" name="skill-needed" required>
+                            <option value="">Select a skill you need</option>
+                            <option value="graphic-design">Graphic Design</option>
+                            <option value="video-editing">Video Editing</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="app-development">App Development</option>
+                            <option value="social-media-management">Social Media Management</option>
+                            <option value="digital-marketing">Digital Marketing</option>
+                            <option value="content-writing">Content Writing</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <input type="reset" value="Reset Form" style="color: rgb(255, 255, 255); background-color: rgb(26, 66, 179); width: 200px; height: 50px; border-radius: 8px; font-size: larger; cursor: pointer; font-weight: bolder;">
+                        
+                        <div class="submit">
+                            <input type="submit" value="Submit" style="color: rgb(255, 255, 255); background-color: rgb(4, 148, 47); width: 200px; height: 50px; border-radius: 8px; font-size: larger; font-weight: bolder; cursor: pointer;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="quiz-section">
+            <div class="quiz-container">
+                <h1>Skill Swap Knowledge Quiz</h1>
+                <div id="quiz">
+                    <div class="question-container">
+                        <p id="question">Loading question...</p>
+                        <div class="options" id="options"></div>
+                    </div>
+                    <button id="next-btn" onclick="nextQuestion()">Next</button>
+                </div>
+                <div id="result" class="result-container">
+                    <p>Your score: <span id="score">0</span>/5</p>
+                    <button onclick="restartQuiz()">Restart Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <div class="testimonials-container">
+                <h2>Success Stories</h2>
+                <div class="testimonial">
+                    <p>"I traded my graphic design skills for web development help. Now I have an amazing portfolio website that's helped me land freelance gigs!"</p>
+                    <p class="testimonial-author">- Sarah K., Graphic Designer</p>
+                </div>
+                <div class="testimonial">
+                    <p>"As a coding student, I needed marketing help for my app. Through Skill Swap, I found a marketing student who helped me launch successfully in exchange for teaching them Python basics."</p>
+                    <p class="testimonial-author">- Michael T., App Developer</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <ul class="footer">
+            <li>
+                Connect With Us <br>
+                <a target="_blank" href="https://www.instagram.com/sufyaa.n_/"><img src="instagram.png" height="30px" alt="Instagram"></a>
+                <a target="_blank" href="#"><img src="facebook.png" height="30px" alt="Facebook"></a>
+                <a target="_blank" href="#"><img src="twitter.png" height="30px" alt="Twitter"></a>
+            </li>
+            <li>Email <br>skillswap@example.com</li>
+            <li>About Us<br>Skill Swap is a platform created by students, for students to facilitate skill exchange and collaboration.</li>
+            <li><a href="#home">Back to top</a></li>
+        </ul>
+        <div class="copyright">
+            <p>&copy; 2025 Skill Swap. All rights reserved.</p>
         </div>
-        <br>
-        <div>
-            <label for="lname">Second name: <br></label>
-            <input type="text" name="lname" id="lname"  placeholder="Enter Your Second Name"  required>
-        </div>
-        <br>
-        <div>
-            <label for="mail">Email: <br></label>
-            <input type="email" name="mail" id="mail" placeholder="@gmail.com" required>
-        </div>
-        <br>
-     
-        <div>
-            <label for="num">Phone : <br></label>
-            <input type="tel" name="num" id="num" placeholder="+91"  required>
-        </div>
-        <br>
-<br>
-        <div>
-            <label for="work"><b>Choose Skill:</b><br></label>
-            <select >
-                <option>Graphic Design</option>
-                <option>Video Editing</option>
-                <option>Web Development</option>
-                <option>App Development</option>
-                <option>Social Media Management</option>
-                <option>Digital Marketing</option>
-                <option>Content Writing</option>
-            </select>
-        </div>
-<br>
-<div>
-    <label for="vaasthu"><b>Upload your Best Work</b><br></label>
-     <input type="file">
-</div>
-
-<br>
-        <label for="Reset"></label>
-        <input type="reset"  style="color: rgb(255, 255, 255);
-    background-color: rgb(26, 66, 179);  width: 200px;  height: 50px; border-radius: 8px; font-size: larger; cursor: pointer; font-weight: bolder;">
-     </div>
-<br>
-     <div class="submit">
-        <label for="submit"></label>
-        <input type="submit" style="color: rgb(255, 255, 255);
-    background-color: rgb(4, 148, 47);  width: 200px;  height: 50px; border-radius: 8px; 
-    font-size: larger; font-weight: bolder; cursor: pointer;">
-     </div>
-    </form>
-    <br>
-</div>
-<div class="quiz-container">
-    <h1>Skill Swap Knowledge Quiz</h1>
-    <div id="quiz">
-        <div class="question-container">
-            <p id="question">Loading question...</p>
-            <div class="options" id="options"></div>
-        </div>
-        <button id="next-btn" onclick="nextQuestion()">Next</button>
-    </div>
-    <div id="result" class="result-container">
-        <p>Your score: <span id="score">0</span>/5</p>
-        <button onclick="restartQuiz()">Restart Quiz</button>
-    </div>
-</div> 
+    </footer>
 </body>
-<footer>
-    <ul class="footer" >
-        <div>
-        <li>Connect With Us <br>
-
-            <a target="_blank" href="https://www.instagram.com/sufyaa.n_/"><img src="instagram.png" height="30px" alt=""></a></li>
-        </div>
-        <li>Email <br>sepsupport@gmail.com</li>
-        <li>About Us</li>
-        <li><a href="#">Back to top</a></li>
-    </ul>
-</footer>
-
 </html>
-
-
-
