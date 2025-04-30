@@ -1,0 +1,31 @@
+<!-- frontend/skills.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Exchange</title>
+</head>
+<body>
+  <h2>List Your Skill</h2>
+  <form method="POST" action="/skills">
+    <input type="text" name="offer" placeholder="Skill you offer" required>
+    <input type="text" name="learn" placeholder="Skill you want to learn" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Available Listings</h2>
+  <div id="listings"></div>
+
+  <script>
+    // Load listings
+    fetch('/skills')
+      .then(res => res.json())
+      .then(data => {
+        const listings = document.getElementById('listings');
+        listings.innerHTML = data.map(item => `
+          <p><strong>Offers:</strong> ${item.offer} | <strong>Wants:</strong> ${item.learn}</p>
+        `).join('');
+      });
+  </script>
+</body>
+</html>
