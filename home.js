@@ -1,150 +1,3 @@
-// const express = require('express')
-// const http = require('http')
-// const fs = require('fs')
-// const path = require('path')
-// const app = express()
-// const port = process.env.PORT || 9000
-
-// app.listen(port,() => {
-//     console.log(`App is being listend at ${port}`);
-// })
-
-// app.use(express.static(__dirname));
-
-// app.get('/home',(req,res,next) =>{
-//     res.sendFile(path.join(__dirname,'index.html'))
-// })
-
-// app.get('/login', (req,res,next) =>{
-//     res.sendFile(path.join(__dirname,'login.html'))
-// })
-
-// app.get('/signup',(req,res,next) =>{
-//     res.sendFile(path.join(__dirname,'signup.html'))
-// })
-
-// home.js (inside frontend/)
-
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
-// const app = express();
-// const port = 3000;
-
-// // Middleware
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static(__dirname)); // To serve CSS and HTML from frontend
-// app.set('view engine', 'html');
-
-// // MongoDB Setup
-// mongoose.connect('mongodb://127.0.0.1:27017/skillExchangeDB', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// });
-
-// // User schema
-// const userSchema = new mongoose.Schema({
-//     username: String,
-//     email: String,
-//     password: String,
-// });
-
-// const User = mongoose.model('User', userSchema);
-
-// // Routes
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + "/index.html");
-// });
-
-// app.get('/login', (req, res) => {
-//     res.sendFile(__dirname + "/login.html");
-// });
-
-// app.get('/signup', (req, res) => {
-//     res.sendFile(__dirname + "/signup.html");
-// });
-
-// app.post('/register', async (req, res) => {
-//     const { username, email, password } = req.body;
-
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//         return res.send("User already exists");
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const newUser = new User({ username, email, password: hashedPassword });
-//     await newUser.save();
-//     res.send("Registration Successful! Now login.");
-// });
-
-// app.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-
-//     const user = await User.findOne({ email });
-//     if (!user) return res.send("User not found");
-
-//     const isPasswordValid = await bcrypt.compare(password, user.password);
-//     if (!isPasswordValid) return res.send("Incorrect password");
-
-//     res.send("Login successful");
-// });
-
-// app.listen(port, () => {
-//     console.log(`Server running at http://localhost:${port}`);
-// });
-
-
-// app.post('/login', async (req, res) => {
-//     const { us_em, pswd } = req.body;
-
-//     try {
-//         const user = await User.findOne({ us_em });
-
-//         if (!user) {
-//             return res.send('User not found');
-//         }
-
-//         const isMatch = await bcrypt.compare(pswd, user.pswd);
-
-//         if (!isMatch) {
-//             return res.send('Incorrect password');
-//         }
-
-//         // ✅ Successful login
-//         res.redirect('/index.html');  // This will redirect to your home page
-
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Server error');
-//     }
-// });
-
-// // Skill model (create this at the top or in a separate file)
-// // const mongoose = require('mongoose');
-
-// const skillSchema = new mongoose.Schema({
-//   offer: String,
-//   learn: String,
-// });
-
-// const Skill = mongoose.model('Skill', skillSchema);
-
-// // POST route to store skill
-// app.post('/skills', async (req, res) => {
-//   const { offer, learn } = req.body;
-//   await Skill.create({ offer, learn });
-//   res.redirect('/skills.html'); // Reloads with new data
-// });
-
-// // GET route to list all skills
-// app.get('/skills', async (req, res) => {
-//   const skills = await Skill.find();
-//   res.json(skills);
-// });
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -152,46 +5,21 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const port = 3000;
+require('dotenv').config();
+const port = process.env.PORT || 3000;
 
-// Parse URL-encoded bodies (as sent by HTML forms)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-
-  // Create string to write
-  const userData = `Email: ${email}, Password: ${password}\n`;
-
-  // Save to loginData.txt (append for multiple logins)
-  const filePath = path.join(__dirname, 'loginData.txt');
-
-  fs.appendFile(filePath, userData, (err) => {
-    if (err) {
-      console.error('❌ Error saving user login:', err);
-      return res.status(500).send('Server error while saving login.');
-    }
-
-    console.log('✅ Login saved to file');
-    // res.send('<h1>Login data stored successfully 👍😁</h1>');
-    res.redirect('afterlogin.html');
-  });
-});
-
-
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname)); // Serve static files like HTML/CSS/JS
-
-// MongoDB Setup
-mongoose.connect('mongodb://127.0.0.1:27017/skillExchangeDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
-// User Schema and Model
-const userSchema = new mongoose.Schema({
+  const userSchema = new mongoose.Schema({
     fname: String,
     lname: String,
     email: String,
@@ -199,205 +27,206 @@ const userSchema = new mongoose.Schema({
     skillOffer: String,
     skillLevel: String,
     skillNeed: String,
-    filePath: String
-});
-
+    filePath: String,
+    password: String,
+    });
+  
+  
+ 
 const User = mongoose.model('User', userSchema);
 
-// Skill Schema and Model
 const skillSchema = new mongoose.Schema({
-    offer: String,
-    learn: String,
+  offer: String,
+  learn: String,
 });
-
 const Skill = mongoose.model('Skill', skillSchema);
 
-// -------------------- ROUTES --------------------
+const loginLogSchema = new mongoose.Schema({
+  email: String,
+  status: String, 
+  reason: String,
+  timestamp: { type: Date, default: Date.now },
+  ip: String,
+  userAgent: String,
+});
+const LoginLog = mongoose.model('LoginLog', loginLogSchema);
 
-// Home Route
+// Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Signup Page
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'signup.html'));
+  res.sendFile(path.join(__dirname, 'signup.html'));
 });
 
-// Login Page
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+app.get('/afterlogin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'afterlogin.html'));
 });
 
 // Register User
 app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-    try {
-        const existingUser = await User.findOne({ email });
+  try {
+    const existingUser = await User.findOne({ email });
 
-        if (existingUser) {
-            return res.send('❌ User already exists');
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword });
-        await newUser.save();
-
-        res.send('✅ Registration successful! You can now log in.');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('❌ Server error during registration');
+    if (existingUser) {
+      return res.send('❌ User already exists');
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ fname: username, email, password: hashedPassword });
+
+    // Log new user data for debugging
+    console.log('New User Data:', newUser);
+
+    await newUser.save();
+
+    res.send('✅ Registration successful! You can now log in.');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('❌ Server error during registration');
+  }
 });
 
-// Login User
+// User Login
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    console.log('Login attempt:', email);
+  const { email, password } = req.body;
 
-    try {
-        const user = await User.findOne({ email });
+  try {
+    const user = await User.findOne({ email });
 
-        if (!user) {
-            return res.send('❌ User not found');
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.send('❌ Incorrect password');
-        }
-
-        // ✅ Successful login
-        res.send(`✅ Welcome back, ${user.username}! Login successful.`);
-        // Optionally: res.redirect('/dashboard.html');
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('❌ Server error during login');
+    if (!user) {
+      console.log('❌ User not found');
+      return res.status(404).json({ message: 'User not found' });
     }
+
+    // For test: just log success
+    console.log('✅ User found:', user.email);
+    res.status(200).json({ message: 'Login success (user found)' });
+
+  } catch (err) {
+    console.error('❌ Login error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
-// Post a skill
+// View Login Logs
+app.get('/login-logs', async (req, res) => {
+  try {
+    const logs = await LoginLog.find().sort({ timestamp: -1 });
+    res.json(logs);
+  } catch (err) {
+    res.status(500).send('❌ Error fetching login logs');
+  }
+});
+
+// Post Skill
 app.post('/skills', async (req, res) => {
-    const { offer, learn } = req.body;
+  const { offer, learn } = req.body;
 
-    try {
-        await Skill.create({ offer, learn });
-        res.redirect('/skills.html');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('❌ Error saving skill');
-    }
+  try {
+    await Skill.create({ offer, learn });
+    res.redirect('/skills.html');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('❌ Error saving skill');
+  }
 });
 
-// Get all skills
+// Get All Skills
 app.get('/skills', async (req, res) => {
-    try {
-        const skills = await Skill.find();
-        res.json(skills);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('❌ Error fetching skills');
-    }
+  try {
+    const skills = await Skill.find();
+    res.json(skills);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('❌ Error fetching skills');
+  }
 });
 
+// Get All Users (For Debugging)
 app.get('/check-users', async (req, res) => {
-    try {
-        const users = await User.find();  // Find all users
-        res.json(users);  // Send the users as a response
-    } catch (err) {
-        res.status(500).send('❌ Error fetching users');
-    }
-});
-
-// Match skills based on what user needs
-app.get('/matches/:userId', async (req, res) => {
-    const userId = req.params.userId;
-
-    try {
-        const currentUser = await User.findById(userId);
-
-        if (!currentUser) {
-            return res.status(404).send('❌ User not found');
-        }
-
-        const neededSkill = currentUser.skillNeed;
-
-        // Find users who offer the skill this user wants
-        const matches = await User.find({
-            skillOffer: neededSkill,
-            _id: { $ne: currentUser._id }
-        });
-
-        if (matches.length === 0) {
-            return res.send('😞 No matches found for your skill need.');
-        }
-
-        res.json(matches);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('❌ Server error while matching skills');
-    }
-});
-
-app.get('/seed-users', async (req, res) => {
-    try {
-      const dummyUsers = [
-        {
-          fname: "Alice",
-          lname: "Walker",
-          email: "alice@example.com",
-          phone: "1234567890",
-          skillOffer: "Graphic Design",
-          skillLevel: "Advanced",
-          skillNeed: "Web Development",
-        },
-        {
-          fname: "Bob",
-          lname: "Smith",
-          email: "bob@example.com",
-          phone: "9876543210",
-          skillOffer: "Web Development",
-          skillLevel: "Intermediate",
-          skillNeed: "Graphic Design",
-        },
-        {
-          fname: "Charlie",
-          lname: "Brown",
-          email: "charlie@example.com",
-          phone: "4445556666",
-          skillOffer: "Content Writing",
-          skillLevel: "Beginner",
-          skillNeed: "Video Editing",
-        },
-        {
-          fname: "David",
-          lname: "Johnson",
-          email: "david@example.com",
-          phone: "3334445555",
-          skillOffer: "Video Editing",
-          skillLevel: "Advanced",
-          skillNeed: "Content Writing",
-        }
-      ];
-  
-      await User.insertMany(dummyUsers);
-      res.send("✅ Dummy users seeded successfully.");
-    } catch (err) {
-      console.error('❌ Error seeding users:', err);
-      res.status(500).send("❌ Failed to seed dummy users.");
-    }
-  });
-
-  app.get('/all-users', async (req, res) => {
+  try {
     const users = await User.find();
     res.json(users);
-  });
-  
+  } catch (err) {
+    res.status(500).send('❌ Error fetching users');
+  }
+});
 
-// Start Server
+// Skill Matching
+app.get('/matches/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const currentUser = await User.findById(userId);
+
+    if (!currentUser) {
+      return res.status(404).send('❌ User not found');
+    }
+
+    const neededSkill = currentUser.skillNeed;
+    const matches = await User.find({
+      skillOffer: neededSkill,
+      _id: { $ne: currentUser._id },
+    });
+
+    if (matches.length === 0) {
+      return res.send('😞 No matches found for your skill need.');
+    }
+
+    res.json(matches);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('❌ Server error while matching skills');
+  }
+});
+
+// Seed Dummy Users
+app.get('/seed-users', async (req, res) => {
+  try {
+    const dummyUsers = [
+      {
+        fname: 'Alice',
+        lname: 'Walker',
+        email: 'alice@example.com',
+        phone: '1234567890',
+        skillOffer: 'Graphic Design',
+        skillLevel: 'Advanced',
+        skillNeed: 'Web Development',
+        password: await bcrypt.hash('alice123', 10),
+      },
+      {
+        fname: 'Bob',
+        lname: 'Smith',
+        email: 'bob@example.com',
+        phone: '9876543210',
+        skillOffer: 'Web Development',
+        skillLevel: 'Intermediate',
+        skillNeed: 'Graphic Design',
+        password: await bcrypt.hash('bob123', 10),
+      },
+    ];
+
+    await User.insertMany(dummyUsers);
+    res.send('✅ Dummy users seeded successfully.');
+  } catch (err) {
+    console.error('❌ Error seeding users:', err);
+    res.status(500).send('❌ Failed to seed dummy users.');
+  }
+});
+
+app.get('/all-users', async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
 app.listen(port, () => {
-    console.log(`✅ Server running at http://localhost:${port}`);
+  console.log(`✅ Server running at http://localhost:${port}`);
 });

@@ -1,31 +1,279 @@
-<!-- frontend/skills.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Skill Exchange</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* === Styles same as your original === */
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f4f6f8;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+
+    form {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 40px;
+    }
+
+    form input {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #listings {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .listing-card {
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .listing-card p {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .match-btn {
+      background-color: #28a745;
+      margin-top: 10px;
+    }
+
+    .match-btn:hover {
+      background-color: #218838;
+    }
+
+    .email-list {
+      margin-top: 10px;
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .email-link {
+      background: #e6f0ff;
+      color: #007bff;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .email-link:hover {
+      background: #d0e2ff;
+    }
+
+    
+
+    .delete-btn {
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    width: 6px;
+    height: 6px;
+    background-color: #888;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.delete-btn:hover {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(156, 25, 25);
+}
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+
+      form,
+      #listings {
+        width: 100%;
+      }
+
+      .email-link {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <h1 style="color:rgb(18, 199, 109);">
+    Your login was successful 😄
+  </h1> <br>
+
   <h2>List Your Skill</h2>
-  <form method="POST" action="/skills">
-    <input type="text" name="offer" placeholder="Skill you offer" required>
-    <input type="text" name="learn" placeholder="Skill you want to learn" required>
+  <form id="skillForm">
+    <input type="text" name="offer" placeholder="Skill you offer" required />
+    <input type="text" name="learn" placeholder="Skill you want to learn" required />
     <button type="submit">Submit</button>
   </form>
+  <div id="skillError" style="color: red; font-size: 14px; margin-top: 5px;"></div>
 
   <h2>Available Listings</h2>
   <div id="listings"></div>
 
   <script>
-    // Load listings
-    fetch('/skills')
-      .then(res => res.json())
-      .then(data => {
-        const listings = document.getElementById('listings');
-        listings.innerHTML = data.map(item => `
-          <p><strong>Offers:</strong> ${item.offer} | <strong>Wants:</strong> ${item.learn}</p>
-        `).join('');
-      });
+    const allEmails = [
+      "mdsufyaan2006@gmail.com",
+      "sufyaanshayaan@gmail.com",
+      "nagulahemanth61@gmail.com",
+      "sappidijayanthkumar@gmail.com",
+      "sofiatabassum1246@gmail.com",
+      "potatipallavi@gmail.com",
+      "rasagnaadai2005@gmail.com",
+      "saipranavi0801@gmail.com",
+      "bhargavichevugoni@gmail.com"
+    ];
+  
+    function getSkills() {
+      return JSON.parse(localStorage.getItem("skills") || "[]");
+    }
+  
+    function saveSkills(skills) {
+      localStorage.setItem("skills", JSON.stringify(skills));
+    }
+  
+    function renderListings(listings) {
+      const listingsContainer = document.getElementById("listings");
+      if (!listings || listings.length === 0) {
+        listingsContainer.innerHTML = "<p style='color:#333;'>No available listings yet.</p>";
+        return;
+      }
+  
+      listingsContainer.innerHTML = listings.map((item, index) => {
+        const shuffled = [...allEmails].sort(() => 0.5 - Math.random());
+        const selectedEmails = shuffled.slice(0, 2);
+        const emailLinks = selectedEmails.map(email => `
+          <a class="email-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=${email}" target="_blank">${email}</a>
+        `).join("");
+  
+        return `
+          <div class="listing-card">
+            <button class="delete-btn" onclick="deleteListing('${item.id}')">✖</button>
+            <p><span class="highlight">Offers:</span> ${item.offer} <br><span class="highlight">Wants:</span> ${item.learn}</p>
+            <button class="match-btn" onclick="toggleEmails(${index})">Match</button>
+            <div class="email-list" id="emails-${index}">${emailLinks}</div>
+          </div>
+        `;
+      }).join("");
+    }
+  
+    function fetchAndRenderSkills() {
+      const skills = getSkills();
+      renderListings(skills.reverse());
+    }
+  
+    function deleteListing(id) {
+      if (!confirm("Are you sure you want to delete this listing?")) return;
+      const updated = getSkills().filter(skill => skill.id !== id);
+      saveSkills(updated);
+      fetchAndRenderSkills();
+    }
+  
+    function toggleEmails(index) {
+      const el = document.getElementById(`emails-${index}`);
+      el.style.display = el.style.display === "flex" ? "none" : "flex";
+    }
+  
+    document.getElementById("skillForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+  
+      const offer = this.offer.value.trim().toLowerCase();
+      const learn = this.learn.value.trim().toLowerCase();
+  
+      if (offer === "" || learn === "") {
+        alert("Please fill in both fields.");
+        return;
+      }
+  
+      if (offer === learn) {
+        alert("❌ 'Skill Offered' and 'Skill You Want to Learn' cannot be the same. Try again !");
+        return;
+      }
+  
+      const newSkill = {
+        id: Date.now().toString(),
+        offer: this.offer.value.trim(),
+        learn: this.learn.value.trim()
+      };
+  
+      const skills = getSkills();
+      skills.push(newSkill);
+      saveSkills(skills);
+      fetchAndRenderSkills();
+      this.reset();
+    });
+  
+    // Initial render
+    fetchAndRenderSkills();
   </script>
 </body>
 </html>
